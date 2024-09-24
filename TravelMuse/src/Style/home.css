@@ -7,8 +7,8 @@
 }
 .unilaglogo{
   position: absolute;
-  top: 1rem;
-  left: 1.3rem;
+  top: 2rem;
+  left: 1rem;
   width: 90px;
   height: auto;           ;
 }
@@ -28,13 +28,13 @@
   color: #5f5f5f;
 }
 .highlight{
-  background-color: rgb(56, 75, 112);
+  background-color: rgb(239, 236, 60);
   padding: 0.3rem 0.5rem;
   border-radius: 0.6rem;
 }
 .start{
   text-align: center;
-  background-color: rgb(56, 75, 112);
+  background-color: rgb(239, 236, 60);
   font-family:'Times New Roman', Times, serif;
   padding: 0.8rem 1.5rem;
   border: none;

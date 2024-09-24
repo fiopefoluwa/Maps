@@ -4,7 +4,11 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        customOrange: 'rgb(239, 236, 60)', 
+      },
+    },
   },
   plugins: [],
 }
