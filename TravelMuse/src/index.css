@@ -1,6 +1,5 @@
-/* :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-
+:root {
+ font-family:'Times New Roman', Times, serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -17,10 +16,7 @@ a {
 body {
   margin: 0;
   padding: 0;
-  font-family: var(--font-family);
-  /* background-color: rgb(99, 167, 144); */
-
-  @tailwind base;
-@tailwind components;
-@tailwind utilities;
+  font-family:'Times New Roman', Times, serif;
+  background-color: #FCFAEE;
+}
 
