@@ -21,10 +21,10 @@ const handleJourneyStart = () => {
 
    return (
      <div>
-{showMapPage ? ( // If showMapPage is true, render the map page
+{showMapPage ? ( 
   <div>
     <h2>Map Page</h2>
-    {/* Insert your map-related components here */}
+    
   </div>
 ) : (
        <div className="lg:flex justify-center items-center min-h-screen sm:space-x-4 grid">
@@ -56,7 +56,7 @@ const handleJourneyStart = () => {
        <FontAwesomeIcon icon={faArrowRight}
        />
        </div>
-       <FontAwesomeIcon icon={faArrowRight} className='hidden sm:visible' />
+       <FontAwesomeIcon icon={faArrowRight} className='invisible lg:visible' />
 
 
        <div className="bg-white shadow-md rounded-lg p-12 max-w-2xl">
@@ -74,7 +74,7 @@ const handleJourneyStart = () => {
         ))}
        </select>
        </div>
-         <button title='nextpage' type='submit' onClick={handleJourneyStart} className=' font-light lg:translate-y-14 lg:-translate-x-4 translate-x-20 p-2 italic border bg-customOrange' >Start your journey</button>
+         <button title='nextpage' type='submit' onClick={handleJourneyStart} className=' font-light lg:translate-y-14 lg:-translate-x-4  p-2 italic border bg-customOrange' >Start your journey</button>
      </div>
 )}
      </div>
