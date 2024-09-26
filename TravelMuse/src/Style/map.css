@@ -1,0 +1,10 @@
+/* Container styling for the map */
+.map-container {
+    height: 500px; /* Set a fixed height */
+    width: 100%;   /* Full width */
+    margin: 20px auto; /* Center the map on the page */
+    border: 2px solid #ddd; /* Add a border around the map */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a subtle shadow */
+  }
+  
