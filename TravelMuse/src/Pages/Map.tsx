@@ -20,9 +20,9 @@ const locations = [
   { name: 'UBA', coords: [6.5198506402719225, 3.3998088057886333] },
   { name: 'Eco Bank', coords: [6.5145147656305795, 3.4044193241917915] },
   { name: 'Access Bank', coords: [6.5093934293706655, 3.3867793050016104] },
-  { name: 'Works and Physical Planing', coords: [6.5197, 3.3914] },
-  { name: 'Unilag Microfinance Bank', coords: [6.5197, 3.3914] },
-  { name: 'Jelili Adebisi Omotola Hall', coords: [6.5197, 3.3914] },
+  { name: 'Works and Physical Planing', coords: [6.518029259493028, 3.391363626944321] },
+  { name: 'Unilag Microfinance Bank', coords: [6.518789370505369, 3.394402600000007] },
+  { name: 'Jelili Adebisi Omotola Hall', coords: [6.516808046720822, 3.3878190814708504] },
   { name: 'Unilag Women Society Hall', coords: [6.5197, 3.3914] },
   { name: 'Diploma 2 Hall', coords: [6.5197, 3.3914] },
   { name: 'J.F. Ade. Ajayi Hall', coords: [6.5197, 3.3914] },
@@ -152,9 +152,9 @@ export default function Map() {
     <div>
       {showMapPage ? (
         <>
-          <div className="p-10">
+          <div>
             <h2 className="text-3xl font-bold p-4">Journey Begins!</h2>
-            <div className="bg-white p-6 rounded-lg shadow-lg">
+            <div className="bg-white p-6 rounded-lg shadow-lg w-1/2">
               <p className="mb-4">
                 Journey from <strong>{currentLocation}</strong> to{' '}
                 <strong>{destination}</strong>:
@@ -171,12 +171,12 @@ export default function Map() {
             <MapContainer
               center={locations[shortestPath[0]].coords as LatLngExpression}
               zoom={30}
+              maxZoom={30} 
               scrollWheelZoom={true}
               style={{ height: '100%', width: '100%' }}
             >
               <TileLayer
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                 maxZoom={19} 
               />
               {shortestPath.map(index => (
                 <Marker position={locations[index].coords as LatLngExpression} key={index}></Marker>
