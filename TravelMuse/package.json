@@ -12,6 +12,7 @@
   "dependencies": {
     "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@fortawesome/react-fontawesome": "^0.2.2",
+    "axios": "^1.7.7",
     "fonts": "^0.0.2",
     "leaflet": "^1.9.4",
     "lucide-react": "^0.446.0",

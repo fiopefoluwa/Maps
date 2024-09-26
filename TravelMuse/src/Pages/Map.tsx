@@ -5,6 +5,8 @@ import Move from '../assets/move.png';
 import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer, Marker, Polyline } from 'react-leaflet';
 import { LatLngExpression } from 'leaflet';
+import axios from 'axios';
+
 
 const locations = [
   { name: 'First Gate', coords: [6.5205, 3.3769] },
