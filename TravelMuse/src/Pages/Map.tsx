@@ -93,10 +93,10 @@ export default function Map() {
     <div>
       {showMapPage ? (
         <div className="p-10">
-          <h2 className="text-2xl font-bold mb-4">Shortest Path</h2>
+          <h2 className="text-3xl font-bold p-4">Journey Begins!</h2>
           <div className="bg-white p-6 rounded-lg shadow-lg">
             <p className="mb-4">Journey from <strong>{currentLocation}</strong> to <strong>{destination}</strong>:</p>
-            <ul className="list-disc ml-6">
+            <ul className="list-disc translate-x-8">
               {shortestPath.map((index) => (
                 <li key={index}>{locations[index]}</li>
               ))}
