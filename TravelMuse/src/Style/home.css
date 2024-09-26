@@ -41,11 +41,12 @@
   border-radius: 0.3rem;
   font-size: 1rem;
   font-weight: bold;
-  margin-top: 1rem;
+  font-style: italic;
+  margin-top: 0.5rem;
   cursor: pointer;
 }
 .start:hover{
-    background-color: rgb(66, 80, 107);
+    background-color: rgb(218, 215, 60);
 }
 .map-container {
     margin-top: 2rem;
