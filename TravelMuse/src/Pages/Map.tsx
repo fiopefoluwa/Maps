@@ -7,9 +7,9 @@ import { MapContainer, TileLayer, Marker, Polyline } from 'react-leaflet';
 import { LatLngExpression } from 'leaflet';
 
 const locations = [
-  { name: 'First Gate', coords: [6.5205, 3.3769] },
+  { name: 'First Gate', coords: [6.518038006651104, 3.3849000694325797] },
   { name: 'Second Gate', coords: [6.511135633259772, 3.3883349533737768] },
-  { name: 'Unilag Medical Center', coords: [6.51530057184001, 3.3885764779102634] },
+  { name: 'Unilag Medical Center', coords: [6.515767419967012, 3.390897409704466] },
   { name: 'Nord', coords: [6.5190879082527875, 3.3904029662446122] },
   { name: 'Lagoon Front', coords: [6.523425274730571, 3.4013699075304378] },
   { name: 'Senate Building', coords: [6.519613529636281, 3.399396846670633] },
@@ -20,70 +20,80 @@ const locations = [
   { name: 'UBA', coords: [6.5198506402719225, 3.3998088057886333] },
   { name: 'Eco Bank', coords: [6.5145147656305795, 3.4044193241917915] },
   { name: 'Access Bank', coords: [6.5093934293706655, 3.3867793050016104] },
-  { name: 'Works and Physical Planing', coords: [6.5197, 3.3914] },
-  { name: 'Unilag Microfinance Bank', coords: [6.5197, 3.3914] },
-  { name: 'Jelili Adebisi Omotola Hall', coords: [6.5197, 3.3914] },
-  { name: 'Unilag Women Society Hall', coords: [6.5197, 3.3914] },
-  { name: 'Diploma 2 Hall', coords: [6.5197, 3.3914] },
-  { name: 'J.F. Ade. Ajayi Hall', coords: [6.5197, 3.3914] },
-  { name: 'Julius Berger Hall', coords: [6.5197, 3.3914] },
-  { name: 'Afe Babalola Hall', coords: [6.5197, 3.3914] },
-  { name: 'Nithub', coords: [6.5123, 3.4042] },
-  { name: 'Moremi Car parks', coords: [6.5139, 3.4052] },
-  { name: 'DLI Car parks', coords: [6.5139, 3.4052] },
-  { name: 'First Gate Car parks', coords: [6.5139, 3.4052] },
-  { name: 'Education Car parks', coords: [6.5139, 3.4052] },
-  { name: 'CITS Car parks', coords: [6.5139, 3.4052] },
-  { name: 'Sport Center Bus-stop', coords: [6.5139, 3.4052] },
-  { name: 'Education Bus-stop', coords: [6.5139, 3.4052] },
-  { name: 'NewHall Center Bus-stop', coords: [6.5139, 3.4052] },
-  { name: 'Science Center Bus-stop', coords: [6.5139, 3.4052] },
-  { name: 'Sport Center', coords: [6.5142, 3.4001] },
-  { name: 'Faculty of Arts ', coords: [6.5151, 3.3998] },
-  { name: 'Faculty of Science ', coords: [6.5151, 3.3998] },
-  { name: 'Faculty of Engineering ', coords: [6.5151, 3.3998] },
-  { name: 'Faculty of Law ', coords: [6.5151, 3.3998] },
-  { name: 'Faculty of Socail Science ', coords: [6.5151, 3.3998] },
-  { name: 'Faculty of Enivironmental Sciences ', coords: [6.5151, 3.3998] },
-  { name: 'Faculty of Management Sciences ', coords: [6.5151, 3.3998] },
-  { name: 'Faculty of Education ', coords: [6.5151, 3.3998] },
-  { name: 'Unilag Bookshop', coords: [6.5158, 3.3978] },
-  { name: 'Unilag Chapel', coords: [6.5158, 3.3978] },
-  { name: 'Unilag Mosque', coords: [6.5158, 3.3978] },
-  { name: 'Unilag Guest House', coords: [6.5158, 3.3978] },
-  { name: 'Amphi Theatre', coords: [6.5158, 3.3978] },
-  { name: 'Unilag Shopping Complex', coords: [6.5158, 3.3978] },
-  { name: 'Unilag Fire Station', coords: [6.5158, 3.3978] },
-  { name: 'CITS', coords: [6.5158, 3.3978] },
-  { name: 'Makama Hall', coords: [6.5158, 3.3978] },
-  { name: 'Fagunwa Hall', coords: [6.5158, 3.3978] },
-  { name: 'Madam Tinubu Hall', coords: [6.5158, 3.3978] },
-  { name: 'sodiende Hall', coords: [6.5158, 3.3978] },
-  { name: 'Eninkoju Hall', coords: [6.5158, 3.3978] },
-  { name: 'Kofo Hall', coords: [6.5158, 3.3978] },
-  { name: 'Anima Hall', coords: [6.5158, 3.3978] },
-  { name: 'El-Kanemi Hall', coords: [6.5158, 3.3978] },
-  { name: 'Moremi Hall', coords: [6.5158, 3.3978] },
-  { name: 'Jaja Hall', coords: [6.5158, 3.3978] },
-  { name: 'Biobaku Hall', coords: [6.5158, 3.3978] },
-  { name: 'Mariere Hall', coords: [6.5158, 3.3978] },
-  { name: 'women Society Hall', coords: [6.5158, 3.3978] },
-  { name: 'Honours Hall', coords: [6.5158, 3.3978] },
+  { name: 'Works and Physical Planing', coords: [6.518189130813266, 3.391696190724184] },
+  { name: 'Unilag Microfinance Bank', coords: [6.518746726095525, 3.3946386289473502] },
+  { name: 'Jelili Adebisi Omotola Hall', coords: [6.516757045723746, 3.387512913607475] },
+  { name: 'Unilag Women Society Hall', coords: [6.519717401444373, 3.392496346132013] },
+  { name: 'Diploma 2 Hall', coords: [6.516758626689072, 3.3870037246762177] },
+  { name: 'J.F. Ade. Ajayi Hall', coords: [6.519408044819525, 3.3995689982675636] },
+  { name: 'Julius Berger Hall', coords: [6.517603483434187, 3.4006611921516887] },
+  { name: 'Afe Babalola Hall', coords: [6.518706364011086, 3.396672065742995] },
+  { name: 'Nitda IT hub', coords: [6.516620105290757, 3.3914112657429865] },
+  { name: 'Moremi Car parks', coords: [6.51804202630593, 3.3975873019571514] },
+  { name: 'DLI Car parks', coords: [6.512971622077242, 3.393688765904148] },
+  { name: 'First Gate Car parks', coords: [6.518038006651104, 3.3849000694325797] },
+  { name: 'Education Bus-stop', coords: [6.52485641089921, 3.3875892684176008] },
+  { name: 'CITS Car parks', coords: [6.518409630804838, 3.3958782160337537] },
+  { name: 'Sport Center Bus-stop', coords: [6.516676102352731, 3.390004225497916] },
+  { name: 'New Hall Car Park', coords: [6.520831480770043, 3.393729298094747] },
+  { name: 'Science Center Bus-stop', coords: [6.51583338188036, 3.3982192921516585] },
+  { name: 'Sport Center', coords: [6.516676102352731, 3.390004225497916] },
+  { name: 'Faculty of Arts ', coords: [6.521101013295016, 3.397735091784999] },
+  { name: 'Faculty of Science ', coords: [6.515326733464871, 3.3997470303686472] },
+  { name: 'Faculty of Engineering ', coords: [6.518649835364064, 3.399038927349784] },
+  { name: 'Faculty of Law ', coords: [6.525634145100189, 3.4117821905535246] },
+  { name: 'Faculty of Socail Science(FSS) ', coords: [6.521526199829765, 3.4073474360100082] },
+  { name: 'Faculty of Enivironmental Sciences ', coords: [6.517823164349928, 3.3878919093363713] },
+  { name: 'Faculty of Management Sciences ', coords: [6.517823164349928, 3.3878919093363713] },
+  { name: 'Faculty of Education ', coords: [6.517118483640811, 3.3862852688511094] },
+  { name: 'Unilag Bookshop', coords: [6.518940599218686, 3.3979199176140393] },
+  { name: 'Unilag Chapel', coords: [6.518533609134759, 3.389943363734044] },
+  { name: 'Unilag Mosque', coords: [6.519113007716095, 3.390248905734241] },
+  { name: 'Unilag Guest House', coords: [6.521804322232922, 3.399823265161535] },
+  { name: 'Amphi Theatre', coords: [6.52284792345147, 3.372473311984389] },
+  { name: 'Unilag Shopping Complex', coords: [6.520355698451263, 3.3977527962108556] },
+  { name: 'Unilag Fire Station', coords: [6.518857328704231, 3.3967257939964854] },
+  { name: 'CITS', coords: [6.518409630804838, 3.3958782160337537] },
+  { name: 'Makama Hall', coords: [6.519457577259916, 3.3922308074682435] },
+  { name: 'Fagunwa Hall', coords: [6.5199852200792625, 3.39199879636533] },
+  { name: 'Madam Tinubu Hall', coords: [6.520335649213018, 3.3916997300905054] },
+  { name: 'sodiende Hall', coords: [6.519324334034804, 3.3931052075890085] },
+  { name: 'Eninkoju Hall', coords: [6.519104482642222, 3.3935182677382607] },
+  { name: 'Kofo Hall', coords: [6.514933583237769, 3.3858882209368906] },
+  { name: 'Anima Hall', coords: [6.514972224113822, 3.385508688399782] },
+  { name: 'El-Kanemi Hall', coords: [6.51601652409428, 3.3845347390167064] },
+  { name: 'Moremi Hall', coords: [6.518076888342118, 3.397880213025953] },
+  { name: 'Jaja Hall', coords: [6.5163500486976345, 3.3980840608904073] },
+  { name: 'Biobaku Hall', coords: [6.515183417107482, 3.3874700154522213] },
+  { name: 'Mariere Hall', coords: [6.518172823694173, 3.398135023004269] },
+  { name: 'women Society Female Hostel', coords: [6.5110260572559, 3.3933820160288937] },
+  { name: 'Honours Hall', coords: [6.510928788069348, 3.3941330344816456] },
+  { name: 'Staff School', coords: [6.515990391101599, 3.397474863733876] },
+  { name: 'International School, University of Lagos', coords: [66.511024724797567, 3.3920409116622454] },
+  { name: 'Women Society School', coords: [6.5158, 3.3978] },
 ];
 
-const graph: number[][] = [
-  [0, 4, 0, 0, 0, 0, 0, 8, 0],
-  [4, 0, 8, 0, 0, 0, 0, 11, 0],
-  [0, 8, 0, 7, 0, 4, 0, 0, 2],
-  [0, 0, 7, 0, 9, 14, 0, 0, 0],
-  [0, 0, 0, 9, 0, 10, 0, 0, 0],
-  [0, 0, 4, 14, 10, 0, 2, 0, 0],
-  [0, 0, 0, 0, 0, 2, 0, 1, 6],
-  [8, 11, 0, 0, 0, 0, 1, 0, 7],
-  [0, 0, 2, 0, 0, 0, 6, 7, 0],
-];
+// const graph: number[][] = [
+//   [0, 4, 0, 0, 0, 0, 0, 8, 0],
+//   [4, 0, 8, 0, 0, 0, 0, 11, 0],
+//   [0, 8, 0, 7, 0, 4, 0, 0, 2],
+//   [0, 0, 7, 0, 9, 14, 0, 0, 0],
+//   [0, 0, 0, 9, 0, 10, 0, 0, 0],
+//   [0, 0, 4, 14, 10, 0, 2, 0, 0],
+//   [0, 0, 0, 0, 0, 2, 0, 1, 6],
+//   [8, 11, 0, 0, 0, 0, 1, 0, 7],
+//   [0, 0, 2, 0, 0, 0, 6, 7, 0],
+// ];
 
-const NumberOfLocations = 9;
+const NumberOfLocations = locations.length;
+
+const graph: number[][] = Array(NumberOfLocations).fill(0).map(() => Array(NumberOfLocations).fill(0));
+
+for (let i = 0; i < NumberOfLocations; i++) {
+  for (let j = 0; j < NumberOfLocations; j++) {
+    if (i !== j) graph[i][j] = Math.floor(Math.random() * 10 + 1); 
+  }
+}
 
 function minDistance(distance: number[], processedLocations: boolean[]): number {
   let min = Number.MAX_VALUE;
@@ -104,6 +114,7 @@ function dijkstra(graph: number[][], src: number, dest: number): number[] {
   const processedLocations = new Array(NumberOfLocations).fill(false);
   const path = new Array(NumberOfLocations).fill(-1);
   shortestDistance[src] = 0;
+
   for (let count = 0; count < NumberOfLocations - 1; count++) {
     const m = minDistance(shortestDistance, processedLocations);
     processedLocations[m] = true;
@@ -120,7 +131,6 @@ function dijkstra(graph: number[][], src: number, dest: number): number[] {
       }
     }
   }
-
   const shortestPath = [];
   let step = dest;
   while (step !== -1) {
@@ -170,7 +180,7 @@ export default function Map() {
           <div style={{ width: '60%', height: '450px', margin: '0 auto', border: '2px solid #ddd', borderRadius: '10px' }}>
             <MapContainer
               center={locations[shortestPath[0]].coords as LatLngExpression}
-              zoom={30}
+              zoom={17}
               scrollWheelZoom={true}
               style={{ height: '100%', width: '100%' }}
             >
