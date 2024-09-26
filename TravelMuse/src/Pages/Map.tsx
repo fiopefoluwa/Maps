@@ -2,6 +2,10 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons/faArrowRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import Move from '../assets/move.png';
+import 'leaflet/dist/leaflet.css';
+import '../Style/map.css'
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+
 
 const locations = [
   'First Gate', 
@@ -102,6 +106,25 @@ export default function Map() {
               ))}
             </ul>
           </div>
+          <div className="map-container">
+      <MapContainer
+        center={[6.5194, 3.3759]} 
+        zoom={15}
+        style={{ height: '100%', width: '100%' }} 
+      >
+        {/* Add a tile layer to the map */}
+        <TileLayer
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='© OpenStreetMap contributors'
+        />
+        {/* Add a sample marker */}
+        <Marker position={[6.5194, 3.3759]}>
+          <Popup>
+            University of Lagos <br /> Main Campus.
+          </Popup>
+        </Marker>
+      </MapContainer>
+    </div>
         </div>
       ) : (
         <div className="lg:flex justify-center items-center min-h-screen sm:space-x-4 grid">
