@@ -9,12 +9,12 @@ import { LatLngExpression } from 'leaflet';
 const locations = [
   { name: 'First Gate', coords: [6.5205, 3.3769] },
   { name: 'Second Gate', coords: [6.5215, 3.3791] },
-  { name: 'Medical Center', coords: [6.5148, 3.3962] },
+  { name: 'Medical Center', coords: [6.515332527165251, 3.388689100071914] },
   { name: 'Nord', coords: [6.5175, 3.3921] },
   { name: 'Lagoon Front', coords: [6.5167, 3.3975] },
   { name: 'Senate Building', coords: [6.5185, 3.3929] },
   { name: 'Banks', coords: [6.5197, 3.3914] },
-  { name: 'Nithub', coords: [6.5123, 3.4042] },
+  { name: 'Nithub', coords: [6.517125291785392, 3.3910159136917666] },
   { name: 'Car parks', coords: [6.5139, 3.4052] },
   { name: 'Sport Center', coords: [6.5142, 3.4001] },
   { name: 'Faculties', coords: [6.5151, 3.3998] },
@@ -120,12 +120,13 @@ export default function Map() {
           <div style={{ width: '60%', height: '450px', margin: '0 auto', border: '2px solid #ddd', borderRadius: '10px' }}>
             <MapContainer
               center={locations[shortestPath[0]].coords as LatLngExpression}
-              zoom={16}
+              zoom={30}
               scrollWheelZoom={true}
               style={{ height: '100%', width: '100%' }}
             >
               <TileLayer
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                 maxZoom={19} 
               />
               {shortestPath.map(index => (
                 <Marker position={locations[index].coords as LatLngExpression} key={index}></Marker>
