@@ -17,19 +17,19 @@ type Directions = {
   }>;
 };
 
-function haversineDistance(coord1: number[], coord2: number[]): number {
-  const [latitude1, longitude1] = coord1
-  const [latitide2, longitude2] = coord2
-  const R = 6371
-  const dLat = ((latitide2 - latitude1) * Math.PI / 180)
-  const dLon = ((longitude2 - longitude1) * Math.PI / 180)
-  const a =
-    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.cos((latitude1 * Math.PI) / 180) * Math.cos((latitide2 * Math.PI) / 180) *
-    Math.sin(dLon / 2) * Math.sin(dLon / 2);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  return R * c
-}
+// function haversineDistance(coord1: number[], coord2: number[]): number {
+//   const [latitude1, longitude1] = coord1
+//   const [latitide2, longitude2] = coord2
+//   const R = 6371
+//   const dLat = ((latitide2 - latitude1) * Math.PI / 180)
+//   const dLon = ((longitude2 - longitude1) * Math.PI / 180)
+//   const a =
+//     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+//     Math.cos((latitude1 * Math.PI) / 180) * Math.cos((latitide2 * Math.PI) / 180) *
+//     Math.sin(dLon / 2) * Math.sin(dLon / 2);
+//   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+//   return R * c
+// }
 
 const locations = [
   { name: 'First Gate', coords: [6.518038006651104, 3.3849000694325797] },
@@ -123,7 +123,7 @@ function RoutingMachine({
        missingRouteTolerance: 20,
       },
     })
-      .on('routesfound', (e) => {
+      .on('routesfound', (e: { routes: any[]; }) => {
         const routes = e.routes[0];
 
         const directions: Directions = {
@@ -150,7 +150,7 @@ export default function Map() {
   const [currentLocation, setCurrentLocation] = useState('');
   const [destination, setDestination] = useState('');
   const [showMapPage, setShowMapPage] = useState(false);
-  const [directions, setDirections] = useState<Directions | null>(null); // State to hold directions
+  const [directions, setDirections] = useState<Directions | null>(null);
 
 
   const handleJourneyStart = () => {
@@ -166,20 +166,39 @@ export default function Map() {
       {showMapPage ? (
         <>
           <div>
-      <h1 className='text-2xl font-bold'>Journey Begins!</h1>
+      <h1 className='text-3xl font-bold'>Journey Begins!</h1>
       {}
-      <div>
+      <div className='text-center'>
         {directions ? (
           <div>
-            <strong>{currentLocation}</strong> to <strong>{destination}</strong>:
-            <p>Distance: {(directions.summary.totalDistance / 1000).toFixed(2)} km</p>
-                  <p>Estimated Time: {(directions.summary.totalTime / 60).toFixed(2)} mins</p>
-                  <ol>
-                    {directions.instructions.map((instruction: any, index: number) => (
-                      <li key={index}>{instruction.text}</li>
-              ))}
-            </ol>
-          </div>
+  {directions ? (
+    <div className="bg-white p-6 rounded-lg shadow-md ">
+      <h2 className="text-xl font-semibold">
+        <strong className="text-customOrange">{currentLocation}</strong> to <strong className="text-customOrange">{destination}</strong>
+      </h2>
+      <p className="text-gray-600">
+        Distance: <span className="font-bold">{(directions.summary.totalDistance / 1000).toFixed(2)} km</span>
+      </p>
+      <p className="text-gray-600">
+        Estimated Time: <span className="font-bold">{(directions.summary.totalTime / 60).toFixed(2)} mins</span>
+      </p>
+      <ol className="space-y-4 text-left">
+        {directions.instructions.map((instruction: any, index: number) => (
+          <li key={index} className="flex items-start space-x-3">
+            <div className="flex-shrink-0">
+              <div className="w-6 h-6 bg-customOrange text-white rounded-full flex items-center justify-center font-bold">
+                {index + 1}
+              </div>
+            </div>
+            <p className="text-gray-700 text-base">{instruction.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  ) : (
+    <p className="text-gray-500">No directions available</p>
+  )}
+</div>
         ) : (
           <p>Loading directions...</p>
         )}
@@ -187,7 +206,7 @@ export default function Map() {
 
           <div
             style={{
-              width: '60%',
+              width: '100%',
               height: '450px',
               margin: '0 auto',
               border: '2px solid #ddd',
@@ -196,7 +215,8 @@ export default function Map() {
           >
             <MapContainer
               center={locations.find((loc) => loc.name === currentLocation)!.coords as LatLngExpression}
-              zoom={17}
+              zoom={20}
+              maxZoom={30}
               scrollWheelZoom={true}
               style={{ height: '100%', width: '100%' }}
             >

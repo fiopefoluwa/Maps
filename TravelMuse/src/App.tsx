@@ -7,7 +7,7 @@ function App() {
 
   return (
     <>
-     <section>
+     <section >
       <p className="text-[#949AB5] text-center font-extrabold italic">
                             <a
                                 href="https://github.com/fiopefoluwa"
