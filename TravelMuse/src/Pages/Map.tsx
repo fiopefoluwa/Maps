@@ -6,12 +6,25 @@ import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer, Marker, Polyline } from 'react-leaflet';
 import { LatLngExpression } from 'leaflet';
 
+function haversineDistance(coord1: number[], coord2: number[]): number {
+  const [lat1, lon1] = coord1
+  const [lat2, lon2] = coord2
+  const R = 6371
+  const dLat = ((lat2 - lat1) * Math.PI)
+  const dLon = ((lon2 - lon1) * Math.PI)
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos((lat1 * Math.PI) / 180) * Math.cos((lat2 * Math.PI) / 180) *
+    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c
+}
+
 const locations = [
   { name: 'First Gate', coords: [6.518038006651104, 3.3849000694325797] },
   { name: 'Second Gate', coords: [6.511135633259772, 3.3883349533737768] },
-  { name: 'Unilag Medical Center', coords: [6.515767419967012, 3.390897409704466] },
-  { name: 'Nord', coords: [6.5190879082527875, 3.3904029662446122] },
-  { name: 'Lagoon Front', coords: [6.523425274730571, 3.4013699075304378] },
+  { name: 'Faculty of Engineering', coords: [6.518649835364064, 3.399038927349784] },
+  { name: 'Faculty of Science', coords: [6.515326733464871, 3.3997470303686472] },
   { name: 'Senate Building', coords: [6.519613529636281, 3.399396846670633] },
   { name: 'First Bank', coords: [6.513048551469461, 3.3908546239188704] },
   { name: 'Wema Bank', coords: [6.517313052022972, 3.3871572141270914] },
@@ -73,20 +86,22 @@ const locations = [
   { name: 'Women Society School', coords: [6.5158, 3.3978] },
 ];
 
-const NumberOfLocations = locations.length;
+const unilagGraph = {
+  "Faculty of Engineering": {
+    "Faculty of Science": haversineDistance([6.518649835364064, 3.399038927349784], [6.515326733464871, 3.3997470303686472]),
+    "Senate Building": haversineDistance([6.518649835364064, 3.399038927349784], [6.519613529636281, 3.399396846670633]),
+  },
+  "Faculty of Science": {
+    "Faculty of Engineering": haversineDistance([6.515326733464871, 3.3997470303686472], [6.518649835364064, 3.399038927349784]),
+    "Senate Building": haversineDistance([6.515326733464871, 3.3997470303686472], [6.519613529636281, 3.399396846670633]),
+  },
+  "Senate Building": {
+    "Faculty of Engineering": haversineDistance([6.519613529636281, 3.399396846670633], [6.518649835364064, 3.399038927349784]),
+    "Faculty of Science": haversineDistance([6.519613529636281, 3.399396846670633], [6.515326733464871, 3.3997470303686472]),
+  },
+};
 
-function calculateDistance(coord1: number[], coord2: number[]): number {
-  const [lat1, lon1] = coord1;
-  const [lat2, lon2] = coord2;
-  const R = 6371;
-  const dLat = ((lat2 - lat1) * Math.PI) / 180;
-  const dLon = ((lon2 - lon1) * Math.PI) / 180;
-  const a =
-    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.cos((lat1 * Math.PI) / 180) * Math.cos((lat2 * Math.PI) / 180) * Math.sin(dLon / 2) * Math.sin(dLon / 2);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  return R * c; 
-}
+const NumberOfLocations = locations.length;
 
 const graph: number[][] = Array(NumberOfLocations)
   .fill(0)
@@ -95,12 +110,11 @@ const graph: number[][] = Array(NumberOfLocations)
 for (let i = 0; i < NumberOfLocations; i++) {
   for (let j = 0; j < NumberOfLocations; j++) {
     if (i !== j) {
-      graph[i][j] = calculateDistance(locations[i].coords, locations[j].coords);
+      graph[i][j] = haversineDistance(locations[i].coords, locations[j].coords);
     }
   }
 }
-
-function minDistance(distance: number[],processedLocations: boolean[]): number {
+function minDistance(distance: number[], processedLocations: boolean[]): number {
   let min = Number.MAX_VALUE;
   let minIndex = -1;
 
@@ -232,7 +246,7 @@ export default function Map() {
               onChange={(e) => setCurrentLocation(e.target.value)}
               className="w-full border border-gray-300 rounded-lg p-2"
             >
-              <option value="">....your location</option>
+              <option value="">....Select a location</option>
               {locations.map((location, index) => (
                 <option key={index} value={location.name}>
                   {location.name}
@@ -240,7 +254,7 @@ export default function Map() {
               ))}
             </select>
           </div>
-
+                
           <img
             className="translate-x-20 translate-y-10 lg:hidden"
             src={Move}
@@ -252,19 +266,18 @@ export default function Map() {
             <FontAwesomeIcon icon={faArrowRight} width={400} />
             <FontAwesomeIcon icon={faArrowRight} />
           </div>
-          <FontAwesomeIcon
-            icon={faArrowRight}
-            className="invisible lg:visible"
-          />
+          <FontAwesomeIcon icon={faArrowRight} className='invisible lg:visible' />
 
-          <div className="bg-white shadow-md rounded-lg p-12 max-w-2xl">
+
+          <div className="bg-white shadow-md rounded-lg p-12 max-w-lg">
             <h2 className="text-xl font-semibold mb-4">Where are you going?</h2>
             <select
               value={destination}
               onChange={(e) => setDestination(e.target.value)}
               className="w-full border border-gray-300 rounded-lg p-2"
             >
-              <option value="">....your destination</option>
+              
+              <option value="">....Select a destination</option>
               {locations.map((location, index) => (
                 <option key={index} value={location.name}>
                   {location.name}
@@ -274,17 +287,14 @@ export default function Map() {
           </div>
 
           <button
-            title="nextpage"
-            type="submit"
             onClick={handleJourneyStart}
-            className="font-light lg:translate-y-14 lg:-translate-x-4 p-2 italic border bg-customOrange"
+            className="bg-customOrange hover:bg-blue-600 text-black font-semibold px-4 py-2 rounded-lg lg:translate-y-16 lg:-translate-x-4"
           >
-            Start your journey
+            Start Journey
           </button>
         </div>
       )}
     </div>
   );
 }
-
 

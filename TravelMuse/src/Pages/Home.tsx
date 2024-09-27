@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import '../Style/home.css'
 import Road from '../assets/Road.jpeg'
 import unilaglogo from '../assets/unilaglogo.png';
+import Unilag from '../assets/unilag.jpg';
 
 
  const Home = () => {
@@ -12,13 +13,14 @@ import unilaglogo from '../assets/unilaglogo.png';
         <div className='body'>
         <div>
             <h1 className='weclome text-2xl'>Welcome to <span className='highlight italic text-4xl font-extrabold'>Travel Muse.</span></h1>
-            <p className='subtext'>Let's help you find your way around Unilag.</p>
+            <p className='subtext text-sm'>Let's help you find your way around Unilag.</p>
             <Link to={'/maps'}>
-            <button title='nextpage' type='submit' className='start'>Start your journey</button>
+            <button title='nextpage' type='submit' className='start translate-y-10'>Start your journey</button>
             </Link>
         </div>
-        <div className='map-container'>
-            <img className='travel-img' src={Road} alt="" />
+        <div className="relative">
+          <img src={Road} alt="Road" className="travel-img" />
+          <img src={Unilag} alt="UNILAG" className="absolute inset-0 z-10 w-full  m-auto opacity-70 rounded-full" />
         </div>
         </div>
     </main>
