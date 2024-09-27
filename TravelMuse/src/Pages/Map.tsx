@@ -100,7 +100,7 @@ for (let i = 0; i < NumberOfLocations; i++) {
   }
 }
 
-function minDistance(distance: number[], processedLocations: boolean[]): number {
+function minDistance(distance: number[],processedLocations: boolean[]): number {
   let min = Number.MAX_VALUE;
   let minIndex = -1;
 
