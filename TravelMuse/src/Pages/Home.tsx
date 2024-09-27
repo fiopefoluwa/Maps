@@ -20,7 +20,7 @@ import Unilag from '../assets/unilag.jpg';
         </div>
         <div className="relative">
           <img src={Road} alt="Road" className="travel-img" />
-          <img src={Unilag} alt="UNILAG" className="absolute inset-0 z-10 w-full  m-auto opacity-70 rounded-full" />
+          <img src={Unilag} alt="UNILAG" className="absolute inset-6 lg:inset-x-28  w-full opacity-100 rounded-full" />
         </div>
         </div>
     </main>

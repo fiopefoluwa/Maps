@@ -57,7 +57,7 @@
   width: 600px;
   height: auto;
   border-radius: 50%;
-  padding: 2rem;
+  padding: 4rem;
 }
 
 @media (max-width: 768px) {

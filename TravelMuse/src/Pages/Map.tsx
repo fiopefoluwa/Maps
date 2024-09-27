@@ -102,7 +102,6 @@ function RoutingMachine({
     const routingControl = L.Routing.control({
       waypoints: [L.latLng(startPoint[0], startPoint[1]), L.latLng(endPoint[0], endPoint[1])],
       routeWhileDragging: false,
-      // createMarker: () => null,
       show: false,
       fitSelectedRoutes: false,
       lineOptions: {
@@ -154,14 +153,13 @@ export default function Map() {
       {showMapPage ? (
         <>
           <div>
-      <h1 className='text-3xl font-bold'>Journey Begins!</h1>
       {}
-      <div className='text-center'>
+      <div className=''>
         {directions ? (
           <div>
   {directions ? (
-    <div className="bg-white p-6 rounded-lg shadow-md ">
-      <h2 className="text-xl font-semibold">
+    <div className=" p-6 rounded-lg shadow-md ">
+      <h2 className="text-2xl font-semibold">
         <strong className="text-customOrange">{currentLocation}</strong> to <strong className="text-customOrange">{destination}</strong>
       </h2>
       <p className="text-gray-600">
@@ -203,7 +201,7 @@ export default function Map() {
           >
             <MapContainer
               center={locations.find((loc) => loc.name === currentLocation)!.coords as LatLngExpression}
-              zoom={20}
+              zoom={30}
               maxZoom={30}
               scrollWheelZoom={true}
               style={{ height: '100%', width: '100%' }}
