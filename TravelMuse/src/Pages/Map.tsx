@@ -102,7 +102,9 @@ function RoutingMachine({
     const routingControl = L.Routing.control({
       waypoints: [L.latLng(startPoint[0], startPoint[1]), L.latLng(endPoint[0], endPoint[1])],
       routeWhileDragging: false,
+      // createMarker: () => null,
       show: false,
+      fitSelectedRoutes: false,
       lineOptions: {
         styles: [{ color: 'red', weight: 4 }],
         extendToWaypoints: true, 
