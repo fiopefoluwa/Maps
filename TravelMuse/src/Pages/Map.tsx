@@ -201,8 +201,7 @@ export default function Map() {
           >
             <MapContainer
               center={locations.find((loc) => loc.name === currentLocation)!.coords as LatLngExpression}
-              zoom={30}
-              maxZoom={30}
+              zoom={17}
               scrollWheelZoom={true}
               style={{ height: '100%', width: '100%' }}
             >
