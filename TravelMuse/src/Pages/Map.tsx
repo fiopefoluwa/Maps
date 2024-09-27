@@ -1,24 +1,22 @@
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons/faArrowRight';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Move from '../assets/move.png';
 import 'leaflet/dist/leaflet.css';
-import { MapContainer, TileLayer, Marker, Polyline } from 'react-leaflet';
-import { LatLngExpression } from 'leaflet';
+import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet';
+import 'leaflet-routing-machine';
+import L, { LatLngExpression } from 'leaflet';
 
-function haversineDistance(coord1: number[], coord2: number[]): number {
-  const [lat1, lon1] = coord1
-  const [lat2, lon2] = coord2
-  const R = 6371
-  const dLat = ((lat2 - lat1) * Math.PI)
-  const dLon = ((lon2 - lon1) * Math.PI)
-  const a =
-    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-    Math.cos((lat1 * Math.PI) / 180) * Math.cos((lat2 * Math.PI) / 180) *
-    Math.sin(dLon / 2) * Math.sin(dLon / 2);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  return R * c
-}
+type Directions = {
+  summary: {
+    totalDistance: number;
+    totalTime: number;
+  };
+  instructions: Array<{
+    text: string;
+  }>;
+};
+
 
 const locations = [
   { name: 'First Gate', coords: [6.518038006651104, 3.3849000694325797] },
@@ -32,7 +30,7 @@ const locations = [
   { name: 'OYEWUSI IBIDAPO OBE HOUSE (ZENITH BANK AND UNILAG ALUMNI BUILDING)', coords: [6.517314253474004, 3.3983274497118234] },
   { name: 'UBA', coords: [6.5198506402719225, 3.3998088057886333] },
   { name: 'Eco Bank', coords: [6.5145147656305795, 3.4044193241917915] },
-  { name: 'Access Bank', coords: [6.5093934293706655, 3.3867793050016104] },
+  { name: 'Access Bank', coords: [6.519561991159253, 3.3940302244664036] },
   { name: 'Works and Physical Planing', coords: [6.518189130813266, 3.391696190724184] },
   { name: 'Unilag Microfinance Bank', coords: [6.518746726095525, 3.3946386289473502] },
   { name: 'Jelili Adebisi Omotola Hall', coords: [6.516757045723746, 3.387512913607475] },
@@ -86,92 +84,64 @@ const locations = [
   { name: 'Women Society School', coords: [6.5158, 3.3978] },
 ];
 
-const unilagGraph = {
-  "Faculty of Engineering": {
-    "Faculty of Science": haversineDistance([6.518649835364064, 3.399038927349784], [6.515326733464871, 3.3997470303686472]),
-    "Senate Building": haversineDistance([6.518649835364064, 3.399038927349784], [6.519613529636281, 3.399396846670633]),
-  },
-  "Faculty of Science": {
-    "Faculty of Engineering": haversineDistance([6.515326733464871, 3.3997470303686472], [6.518649835364064, 3.399038927349784]),
-    "Senate Building": haversineDistance([6.515326733464871, 3.3997470303686472], [6.519613529636281, 3.399396846670633]),
-  },
-  "Senate Building": {
-    "Faculty of Engineering": haversineDistance([6.519613529636281, 3.399396846670633], [6.518649835364064, 3.399038927349784]),
-    "Faculty of Science": haversineDistance([6.519613529636281, 3.399396846670633], [6.515326733464871, 3.3997470303686472]),
-  },
-};
 
-const NumberOfLocations = locations.length;
+function RoutingMachine({
+  startPoint,
+  endPoint,
+  setDirections,
+}: {
+  startPoint: number[];
+  endPoint: number[];
+  setDirections: React.Dispatch<React.SetStateAction<Directions | null>>;
+}) {
+  const map = useMap();
 
-const graph: number[][] = Array(NumberOfLocations)
-  .fill(0)
-  .map(() => Array(NumberOfLocations).fill(0));
 
-for (let i = 0; i < NumberOfLocations; i++) {
-  for (let j = 0; j < NumberOfLocations; j++) {
-    if (i !== j) {
-      graph[i][j] = haversineDistance(locations[i].coords, locations[j].coords);
-    }
-  }
-}
-function minDistance(distance: number[], processedLocations: boolean[]): number {
-  let min = Number.MAX_VALUE;
-  let minIndex = -1;
+  useEffect(() => {
+    if (!map) return;
 
-  for (let i = 0; i < NumberOfLocations; i++) {
-    if (!processedLocations[i] && distance[i] <= min) {
-      min = distance[i];
-      minIndex = i;
-    }
-  }
+    const routingControl = L.Routing.control({
+      waypoints: [L.latLng(startPoint[0], startPoint[1]), L.latLng(endPoint[0], endPoint[1])],
+      routeWhileDragging: false,
+      show: false,
+      lineOptions: {
+        styles: [{ color: 'red', weight: 4 }],
+        extendToWaypoints: true, 
+       missingRouteTolerance: 20,
+      },
+    })
+      .on('routesfound', (e) => {
+        const routes = e.routes[0];
 
-  return minIndex;
-}
+        const directions: Directions = {
+          summary: {
+            totalDistance: routes.summary.totalDistance,
+            totalTime: routes.summary.totalTime,
+          },
+          instructions: routes.instructions.map((instruction : {text: string}) => ({
+            text: instruction.text,
+          })),
+        };
+        setDirections(directions);
+      })
+      .addTo(map);
+    return () => {
+      map.removeControl(routingControl); 
+    };
+  }, [map, startPoint, endPoint]);
 
-function dijkstra(graph: number[][], src: number, dest: number): number[] {
-  const shortestDistance = new Array(NumberOfLocations).fill(Number.MAX_VALUE);
-  const processedLocations = new Array(NumberOfLocations).fill(false);
-  const path = new Array(NumberOfLocations).fill(-1);
-  shortestDistance[src] = 0;
-
-  for (let count = 0; count < NumberOfLocations - 1; count++) {
-    const m = minDistance(shortestDistance, processedLocations);
-    processedLocations[m] = true;
-
-    for (let i = 0; i < NumberOfLocations; i++) {
-      if (
-        !processedLocations[i] &&
-        graph[m][i] !== 0 &&
-        shortestDistance[m] !== Number.MAX_VALUE &&
-        shortestDistance[m] + graph[m][i] < shortestDistance[i]
-      ) {
-        shortestDistance[i] = shortestDistance[m] + graph[m][i];
-        path[i] = m;
-      }
-    }
-  }
-
-  const shortestPath = [];
-  let step = dest;
-  while (step !== -1) {
-    shortestPath.unshift(step);
-    step = path[step];
-  }
-  return shortestPath;
+  return null;
 }
 
 export default function Map() {
   const [currentLocation, setCurrentLocation] = useState('');
   const [destination, setDestination] = useState('');
   const [showMapPage, setShowMapPage] = useState(false);
-  const [shortestPath, setShortestPath] = useState<number[]>([]);
+  const [directions, setDirections] = useState<Directions | null>(null); // State to hold directions
+
 
   const handleJourneyStart = () => {
-    const srcIndex = locations.findIndex(location => location.name === currentLocation);
-    const destIndex = locations.findIndex(location => location.name === destination);
-    if (srcIndex !== -1 && destIndex !== -1) {
-      const path = dijkstra(graph, srcIndex, destIndex);
-      setShortestPath(path);
+    if (currentLocation && destination) {
       setShowMapPage(true);
     } else {
       alert('Please select both a location and a destination.');
@@ -183,19 +153,24 @@ export default function Map() {
       {showMapPage ? (
         <>
           <div>
-            <h2 className="text-3xl font-bold p-4">Journey Begins!</h2>
-            <div className="bg-white p-6 rounded-lg shadow-lg w-1/2">
-              <p className="mb-4">
-                Journey from <strong>{currentLocation}</strong> to{' '}
-                <strong>{destination}</strong>:
-              </p>
-              <ul className="list-disc translate-x-8">
-                {shortestPath.map((index) => (
-                  <li key={index}>{locations[index].name}</li>
-                ))}
-              </ul>
-            </div>
+      <h1 className='text-2xl font-bold'>Journey Begins!</h1>
+      {}
+      <div>
+        {directions ? (
+          <div>
+            <strong>{currentLocation}</strong> to <strong>{destination}</strong>:
+            <p>Distance: {(directions.summary.totalDistance / 1000).toFixed(2)} km</p>
+                  <p>Estimated Time: {(directions.summary.totalTime / 60).toFixed(2)} mins</p>
+                  <ol>
+                    {directions.instructions.map((instruction: any, index: number) => (
+                      <li key={index}>{instruction.text}</li>
+              ))}
+            </ol>
           </div>
+        ) : (
+          <p>Loading directions...</p>
+        )}
+      </div>
 
           <div
             style={{
@@ -207,34 +182,31 @@ export default function Map() {
             }}
           >
             <MapContainer
-                center={locations[shortestPath[0]].coords as LatLngExpression}
-                zoom={17}
-                scrollWheelZoom={true}
-                style={{ height: '100%', width: '100%' }}
-              >
-                <TileLayer
-                  url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              center={locations.find((loc) => loc.name === currentLocation)!.coords as LatLngExpression}
+              zoom={17}
+              scrollWheelZoom={true}
+              style={{ height: '100%', width: '100%' }}
+            >
+              <TileLayer
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              />
+              {locations.map((loc, index) => (
+                <Marker
+                  position={loc.coords as LatLngExpression}
+                  key={index}
                 />
+              ))}
 
-                {shortestPath.map((index) => (
-                  <Marker
-                    position={locations[index].coords as LatLngExpression}
-                    key={index}
-                  />
-                ))}
+              {currentLocation && destination && (
+                <RoutingMachine
+                  startPoint={locations.find((loc) => loc.name === currentLocation)!.coords}
+                  endPoint={locations.find((loc) => loc.name === destination)!.coords}
+                  setDirections={setDirections} 
 
-                {shortestPath.length > 1 && (
-                  <Polyline
-                    positions={shortestPath.map(
-                      (index) => locations[index].coords as LatLngExpression
-                    )}
-                    color="blue"
-                    weight={2}
-                    opacity={0.8} 
-                    smoothFactor={1}
-                  />
-                )}
-              </MapContainer>
+                />
+              )}
+            </MapContainer>
+          </div>
           </div>
         </>
       ) : (
@@ -254,7 +226,7 @@ export default function Map() {
               ))}
             </select>
           </div>
-                
+
           <img
             className="translate-x-20 translate-y-10 lg:hidden"
             src={Move}
@@ -268,7 +240,6 @@ export default function Map() {
           </div>
           <FontAwesomeIcon icon={faArrowRight} className='invisible lg:visible' />
 
-
           <div className="bg-white shadow-md rounded-lg p-12 max-w-lg">
             <h2 className="text-xl font-semibold mb-4">Where are you going?</h2>
             <select
@@ -276,7 +247,6 @@ export default function Map() {
               onChange={(e) => setDestination(e.target.value)}
               className="w-full border border-gray-300 rounded-lg p-2"
             >
-              
               <option value="">....Select a destination</option>
               {locations.map((location, index) => (
                 <option key={index} value={location.name}>
@@ -297,4 +267,3 @@ export default function Map() {
     </div>
   );
 }
-
