@@ -12,10 +12,10 @@
   height: auto;           ;
 }
 .body{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 60px;
 }
 .welcome{
   font-size: 2.5rem;
@@ -41,7 +41,6 @@
   font-size: 1rem;
   font-weight: bold;
   font-style: italic;
-  margin-top: 0.5rem;
   cursor: pointer;
 }
 .start:hover{

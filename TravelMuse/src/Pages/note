@@ -1,15 +1,14 @@
-const unilagGraph: Graph = {
-    "Faculty of Engineering": {
-      "Faculty of Science": haversineDistance([6.516, 3.387], [6.52, 3.391]),
-      "Main Auditorium": haversineDistance([6.516, 3.387], [6.517, 3.387]),
-    },
-    "Faculty of Science": {
-      "Faculty of Engineering": haversineDistance(
-        [6.52, 3.391],
-        [6.516, 3.387]
-      ),
-      "Senate Building": haversineDistance([6.52, 3.391], [6.515, 3.386]),
-    },
-    // Continue defining other landmarks...
-  };
+// const unilagGraph: Graph = {
+//     "Faculty of Engineering": {
+//       "Faculty of Science": haversineDistance([6.516, 3.387], [6.52, 3.391]),
+//       "Main Auditorium": haversineDistance([6.516, 3.387], [6.517, 3.387]),
+//     },
+//     "Faculty of Science": {
+//       "Faculty of Engineering": haversineDistance(
+//         [6.52, 3.391],
+//         [6.516, 3.387]
+//       ),
+//       "Senate Building": haversineDistance([6.52, 3.391], [6.515, 3.386]),
+//     },
+//   };
 

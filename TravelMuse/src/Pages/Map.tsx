@@ -6,6 +6,8 @@ import 'leaflet/dist/leaflet.css';
 import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet';
 import 'leaflet-routing-machine';
 import L, { LatLngExpression } from 'leaflet';
+import 'leaflet-polylinedecorator';
+import sneak from '../assets/sneakers.png'
 
 type Directions = {
   summary: {
@@ -26,11 +28,11 @@ const locations = [
   { name: 'First Bank', coords: [6.513048551469461, 3.3908546239188704] },
   { name: 'Wema Bank', coords: [6.517313052022972, 3.3871572141270914] },
   { name: 'Guaranty Trust Bank', coords: [6.51728735620547, 3.3980374170375356] },
-  { name: 'OYEWUSI IBIDAPO OBE HOUSE (ZENITH BANK AND UNILAG ALUMNI BUILDING)', coords: [6.517314253474004, 3.3983274497118234] },
+  { name: 'Oyewusi Ibidapo Obe House (ZENITH BANK AND UNILAG ALUMNI BUILDING)', coords: [6.517314253474004, 3.3983274497118234] },
   { name: 'UBA', coords: [6.5198506402719225, 3.3998088057886333] },
   { name: 'Eco Bank', coords: [6.5145147656305795, 3.4044193241917915] },
-  { name: 'Access Bank', coords: [6.519561991159253, 3.3940302244664036] },
-  { name: 'Works and Physical Planing', coords: [6.518189130813266, 3.391696190724184] },
+  { name: 'Access Bank', coords: [6.518851804538775, 3.391942124957123] },
+  { name: 'Works and Physical Planing', coords: [6.518013249316247, 3.3914534507780707] },
   { name: 'Unilag Microfinance Bank', coords: [6.518746726095525, 3.3946386289473502] },
   { name: 'Jelili Adebisi Omotola Hall', coords: [6.516757045723746, 3.387512913607475] },
   { name: 'Unilag Women Society Hall', coords: [6.519717401444373, 3.392496346132013] },
@@ -58,7 +60,7 @@ const locations = [
   { name: 'Faculty of Education ', coords: [6.517118483640811, 3.3862852688511094] },
   { name: 'Unilag Bookshop', coords: [6.518940599218686, 3.3979199176140393] },
   { name: 'Unilag Chapel', coords: [6.518533609134759, 3.389943363734044] },
-  { name: 'Unilag Mosque', coords: [6.519113007716095, 3.390248905734241] },
+  { name: 'Unilag Mosque', coords: [6.518920015146444, 3.3903754682175435] },
   { name: 'Unilag Guest House', coords: [6.521804322232922, 3.399823265161535] },
   { name: 'Amphi Theatre', coords: [6.52284792345147, 3.372473311984389] },
   { name: 'Unilag Shopping Complex', coords: [6.520355698451263, 3.3977527962108556] },
@@ -80,7 +82,22 @@ const locations = [
   { name: 'Honours Hall', coords: [6.510928788069348, 3.3941330344816456] },
   { name: 'Staff School', coords: [6.515990391101599, 3.397474863733876] },
   { name: 'International School, University of Lagos', coords: [6.511024724797567, 3.3920409116622454] },
-  { name: 'Women Society School', coords: [6.5158, 3.3978] },
+  { name: 'Women Society School', coords: [6.5148964700533085, 3.396152559523547] },
+  { name: 'Unilag Petrol Station', coords: [6.518860721853981, 3.391119110665765] },
+  { name: 'OPVine', coords: [6.514748546373861, 3.3864662124178353] },
+  { name: 'Korede Spaghetti', coords: [6.518860721853981, 3.391119110665765] },
+  { name: 'AY Pizza', coords: [6.51622433990857, 3.397290818519935] },
+  { name: 'Cafe One', coords: [6.51870963717366, 3.397544744698269] },
+  { name: 'Iya Moriam', coords: [6.51176303064046, 3.3927435970355373] },
+  { name: 'Red Bricks', coords: [6.5166869982041495, 3.398309174288397] },
+  { name: 'DSA Office', coords: [6.51691417906622, 3.3968111606888676] },
+  { name: 'Fidelity ATM', coords: [6.518625460169201, 3.3944441441113304] },
+  { name: 'Polaris ATM', coords: [6.518013249316247, 3.3914534507780707] },
+  { name: 'Unilag Water Factory', coords: [6.519391935031219, 3.391705017454971] },
+  { name: 'Unilag Catholic Cabin', coords: [6.518381068113906, 3.3904514621503354] },
+  { name: 'Unilag Bakery', coords: [6.519613884014893, 3.3918512406701273] },
+  { name: 'Nord', coords: [6.518013249316247, 3.3914534507780707] },
+
 ];
 
 
@@ -99,13 +116,19 @@ function RoutingMachine({
   useEffect(() => {
     if (!map) return;
 
+    const footstepsIcon = L.icon({
+      iconUrl: sneak,
+      iconSize: [20, 20],
+      iconAnchor: [10, 10],
+    });
+
     const routingControl = L.Routing.control({
       waypoints: [L.latLng(startPoint[0], startPoint[1]), L.latLng(endPoint[0], endPoint[1])],
       routeWhileDragging: false,
       show: false,
       fitSelectedRoutes: false,
       lineOptions: {
-        styles: [{ color: 'red', weight: 4 }],
+        styles: [{ color: 'yellow', weight: 3 }],
         extendToWaypoints: true, 
         missingRouteTolerance: 20,
       },
@@ -123,6 +146,22 @@ function RoutingMachine({
           })),
         };
         setDirections(directions);
+        const path = routes.coordinates.map((coord: { lat: number; lng: number }) => [coord.lat, coord.lng]);
+        const footstepsPattern = L.polylineDecorator(L.polyline(path), {
+          patterns: [
+            {
+              symbol: L.Symbol.marker({
+                rotate: true,
+                markerOptions: {
+                  icon: footstepsIcon,
+                },
+              }),
+              offset: '5%', 
+              repeat: '30%', 
+            },
+          ],
+        });
+        footstepsPattern.addTo(map);
       })
       .addTo(map);
     return () => {
