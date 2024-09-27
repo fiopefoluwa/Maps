@@ -7,12 +7,22 @@ import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet';
 import 'leaflet-routing-machine';
 import L, { LatLngExpression } from 'leaflet';
 
+type Directions = {
+  summary: {
+    totalDistance: number;
+    totalTime: number;
+  };
+  instructions: Array<{
+    text: string;
+  }>;
+};
+
 function haversineDistance(coord1: number[], coord2: number[]): number {
   const [latitude1, longitude1] = coord1
   const [latitide2, longitude2] = coord2
   const R = 6371
-  const dLat = ((latitide2 - latitude1) * Math.PI)
-  const dLon = ((longitude2 - longitude1) * Math.PI)
+  const dLat = ((latitide2 - latitude1) * Math.PI / 180)
+  const dLon = ((longitude2 - longitude1) * Math.PI / 180)
   const a =
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
     Math.cos((latitude1 * Math.PI) / 180) * Math.cos((latitide2 * Math.PI) / 180) *
