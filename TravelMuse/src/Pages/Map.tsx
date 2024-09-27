@@ -102,7 +102,9 @@ function RoutingMachine({
     const routingControl = L.Routing.control({
       waypoints: [L.latLng(startPoint[0], startPoint[1]), L.latLng(endPoint[0], endPoint[1])],
       routeWhileDragging: false,
+      // createMarker: () => null,
       show: false,
+      fitSelectedRoutes: false,
       lineOptions: {
         styles: [{ color: 'red', weight: 4 }],
         extendToWaypoints: true, 
@@ -157,13 +159,13 @@ export default function Map() {
       <div>
         {directions ? (
           <div>
-            <strong>{currentLocation}</strong> to <strong>{destination}</strong>:
-            <p>Distance: {(directions.summary.totalDistance / 1000).toFixed(2)} km</p>
-                  <p>Estimated Time: {(directions.summary.totalTime / 60).toFixed(2)} mins</p>
-                  <ol>
-                    {directions.instructions.map((instruction: any, index: number) => (
-                      <li key={index}>{instruction.text}</li>
-              ))}
+          <h2>Journey from <strong>{currentLocation}</strong> to <strong>{destination}</strong>:</h2>
+          <p>Distance: {(directions.summary.totalDistance / 1000).toFixed(2)} km</p>
+          <p>Estimated Time: {(directions.summary.totalTime / 60).toFixed(2)} mins</p>
+          <ol>
+            {directions.instructions.map((instruction: any, index: number) => (
+              <li key={index}>{instruction.text}</li>
+            ))}
             </ol>
           </div>
         ) : (
