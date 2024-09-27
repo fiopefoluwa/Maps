@@ -17,20 +17,6 @@ type Directions = {
   }>;
 };
 
-// function haversineDistance(coord1: number[], coord2: number[]): number {
-//   const [latitude1, longitude1] = coord1
-//   const [latitide2, longitude2] = coord2
-//   const R = 6371
-//   const dLat = ((latitide2 - latitude1) * Math.PI / 180)
-//   const dLon = ((longitude2 - longitude1) * Math.PI / 180)
-//   const a =
-//     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-//     Math.cos((latitude1 * Math.PI) / 180) * Math.cos((latitide2 * Math.PI) / 180) *
-//     Math.sin(dLon / 2) * Math.sin(dLon / 2);
-//   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-//   return R * c
-// }
-
 const locations = [
   { name: 'First Gate', coords: [6.518038006651104, 3.3849000694325797] },
   { name: 'Second Gate', coords: [6.511135633259772, 3.3883349533737768] },
@@ -120,7 +106,7 @@ function RoutingMachine({
       lineOptions: {
         styles: [{ color: 'red', weight: 4 }],
         extendToWaypoints: true, 
-       missingRouteTolerance: 20,
+        missingRouteTolerance: 20,
       },
     })
       .on('routesfound', (e: { routes: any[]; }) => {
@@ -150,7 +136,7 @@ export default function Map() {
   const [currentLocation, setCurrentLocation] = useState('');
   const [destination, setDestination] = useState('');
   const [showMapPage, setShowMapPage] = useState(false);
-  const [directions, setDirections] = useState<Directions | null>(null);
+  const [directions, setDirections] = useState<Directions | null>(null); 
 
 
   const handleJourneyStart = () => {
@@ -229,7 +215,6 @@ export default function Map() {
                   key={index}
                 />
               ))}
-
               {currentLocation && destination && (
                 <RoutingMachine
                   startPoint={locations.find((loc) => loc.name === currentLocation)!.coords}
@@ -259,20 +244,17 @@ export default function Map() {
               ))}
             </select>
           </div>
-
           <img
             className="translate-x-20 translate-y-10 lg:hidden"
             src={Move}
             width={150}
             alt=""
           />
-
           <div className="lg:grid lg:visible hidden">
             <FontAwesomeIcon icon={faArrowRight} width={400} />
             <FontAwesomeIcon icon={faArrowRight} />
           </div>
           <FontAwesomeIcon icon={faArrowRight} className='invisible lg:visible' />
-
           <div className="bg-white shadow-md rounded-lg p-12 max-w-lg">
             <h2 className="text-xl font-semibold mb-4">Where are you going?</h2>
             <select
@@ -288,7 +270,6 @@ export default function Map() {
               ))}
             </select>
           </div>
-
           <button
             onClick={handleJourneyStart}
             className="bg-customOrange hover:bg-blue-600 text-black font-semibold px-4 py-2 rounded-lg lg:translate-y-16 lg:-translate-x-4"
