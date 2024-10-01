@@ -772,6 +772,6 @@ export default function Map() {
           </button>
         </div>
       )}
-    </div>
-  );
+</div>
+);
 }
