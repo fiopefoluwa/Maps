@@ -11,6 +11,7 @@ import sneak from '../assets/sneakers.png'
 
 
 
+
 L.Icon.Default.mergeOptions({
     iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
     iconUrl: require('leaflet/dist/images/marker-icon.png'),
