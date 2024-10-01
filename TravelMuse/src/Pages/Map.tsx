@@ -9,6 +9,7 @@ import L, { LatLngExpression } from 'leaflet';
 import 'leaflet-polylinedecorator';
 import sneak from '../assets/sneakers.png'
 
+
 type Directions = {
   summary: {
     totalDistance: number;
@@ -193,7 +194,7 @@ export default function Map() {
         <>
           <div>
       {}
-      <div className=''>
+      <div>
         {directions ? (
           <div>
   {directions ? (
@@ -207,7 +208,7 @@ export default function Map() {
       <p className="text-gray-600">
         Estimated Time: <span className="font-bold">{(directions.summary.totalTime / 60).toFixed(2)} mins</span>
       </p>
-      <ol className="space-y-4 text-left">
+      <ol className="space-y-4 text-left grid grid-cols-3 grid-rows-2">
         {directions.instructions.map((instruction: any, index: number) => (
           <li key={index} className="flex items-start space-x-3">
             <div className="flex-shrink-0">
@@ -240,12 +241,13 @@ export default function Map() {
           >
             <MapContainer
               center={locations.find((loc) => loc.name === currentLocation)!.coords as LatLngExpression}
-              zoom={17}
+              zoom={19}
               scrollWheelZoom={true}
               style={{ height: '100%', width: '100%' }}
             >
               <TileLayer
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                maxZoom={20}
               />
               {locations.map((loc, index) => (
                 <Marker
