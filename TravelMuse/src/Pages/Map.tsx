@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState, useEffect } from 'react';
 import Move from '../assets/move.png';
 import 'leaflet/dist/leaflet.css';
-import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, useMap } from 'react-leaflet';
 import 'leaflet-routing-machine';
 import L, { LatLngExpression } from 'leaflet';
 import 'leaflet-polylinedecorator';
@@ -208,7 +208,7 @@ export default function Map() {
       <p className="text-gray-600">
         Estimated Time: <span className="font-bold">{(directions.summary.totalTime / 60).toFixed(2)} mins</span>
       </p>
-      <ol className="space-y-4 text-left grid grid-cols-3 grid-rows-2">
+      <ol className="space-y-3 text-left grid grid-cols-3 grid-rows-2">
         {directions.instructions.map((instruction: any, index: number) => (
           <li key={index} className="flex items-start space-x-3">
             <div className="flex-shrink-0">
@@ -249,12 +249,6 @@ export default function Map() {
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 maxZoom={20}
               />
-              {locations.map((loc, index) => (
-                <Marker
-                  position={loc.coords as LatLngExpression}
-                  key={index}
-                />
-              ))}
               {currentLocation && destination && (
                 <RoutingMachine
                   startPoint={locations.find((loc) => loc.name === currentLocation)!.coords}
