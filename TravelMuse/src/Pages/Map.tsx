@@ -12,11 +12,8 @@ import sneak from '../assets/sneakers.png'
 
 
 
-L.Icon.Default.mergeOptions({
-    iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
-    iconUrl: require('leaflet/dist/images/marker-icon.png'),
-    shadowUrl: require('leaflet/dist/images/marker-shadow.png')
-});
+
+
 
 type Directions = {
   summary: {
@@ -180,6 +177,10 @@ function RoutingMachine({
 
   return null;
 }
+// L.Icon.Default.mergeOptions({
+//   iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png').default,
+//   iconUrl: require('leaflet/dist/images/marker-icon.png').default,
+// });
 
 export default function Map() {
   const [currentLocation, setCurrentLocation] = useState('');
