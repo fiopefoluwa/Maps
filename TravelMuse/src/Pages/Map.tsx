@@ -333,23 +333,24 @@ export default function Map() {
                         </span>
                       </p>
                       <ol className="lg:space-y-3 space-y-2 text-left lg:grid lg:grid-cols-3 lg:grid-rows-2">
-                        {directions.instructions.map(
-                          (instruction: any, index: number) => (
-                            <li
-                              key={index}
-                              className="flex items-start space-x-3"
-                            >
-                              <div className="flex-shrink-0">
-                                <div className="w-6 h-6 bg-customOrange text-white rounded-full flex items-center justify-center font-bold">
+                          {directions.instructions.map(
+                            (instruction: any, index: number) => (
+                              <li
+                                key={index}
+                                className="flex items-start space-x-3"
+                              >
+                                <div className="flex-shrink-0">
+                                  <div className="w-6 h-6 bg-customOrange text-white rounded-full flex items-center justify-center font-bold">
+                                    {index + 1}
+                                  </div>
                                 </div>
-                              </div>
-                              <p className="text-gray-700 text-base">
-                                {instruction.text}
-                              </p>
-                            </li>
-                          ),
-                        )}
-                      </ol>
+                                <p className="text-gray-700 text-base">
+                                  {instruction.text}
+                                </p>
+                              </li>
+                            ),
+                          )}
+                       </ol>
                     </div>
                   ) : (
                     <p className="text-gray-500">No directions available</p>
