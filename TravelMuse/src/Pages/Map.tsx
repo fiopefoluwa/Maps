@@ -222,7 +222,7 @@ function RoutingMachine({
       iconSize: [20, 20],
       iconAnchor: [10, 10],
     });
-   
+
     const routingControl = L.Routing.control({
       waypoints: [
         L.latLng(startPoint[0], startPoint[1]),
@@ -237,7 +237,7 @@ function RoutingMachine({
       lineOptions: {
         styles: [{ color: "green", weight: 3 }],
         extendToWaypoints: true,
-        missingRouteTolerance: 50,
+        missingRouteTolerance: 20,
       },
     })
       .on("routesfound", (e: { routes: any[] }) => {
@@ -248,24 +248,13 @@ function RoutingMachine({
             totalDistance: routes.summary.totalDistance,
             totalTime: routes.summary.totalTime,
           },
-          instructions: routes.instructions
-      .filter((instruction: { type: string }) => instruction.type !== 'U-turn')
-      .map((instruction: { text: string, type: string }) => {
-        let updatedText = instruction.text;
-        if (instruction.type === 'TurnRight') {
-          updatedText = `Turn right and continue walking`;
-        } else if (instruction.type === 'TurnLeft') {
-          updatedText = `Turn left and continue walking`;
-        } else if (instruction.type === 'Continue') {
-          updatedText = `Walk straight for a while`;
-        }
-        return {
-          text: updatedText,
-        };
-      }),
+          instructions: routes.instructions.map(
+            (instruction: { text: string }) => ({
+              text: instruction.text,
+            }),
+          ),
         };
         setDirections(directions);
-
         const path = routes.coordinates.map(
           (coord: { lat: number; lng: number }) => [coord.lat, coord.lng],
         );
