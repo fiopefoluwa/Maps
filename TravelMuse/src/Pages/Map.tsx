@@ -277,7 +277,7 @@ function RoutingMachine({
       .addTo(map);
 
       const routingContainer = document.querySelector(".leaflet-routing-container") as HTMLElement;
-      if (window.innerWidth <= 708) {
+      if (window.innerWidth) {
   routingContainer.style.display = "none"; 
 }
     return () => {
