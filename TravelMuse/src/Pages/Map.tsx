@@ -254,6 +254,7 @@ function RoutingMachine({
             }),
           ),
         };
+        // SETTING DIRECTIONS
         setDirections(directions);
         const path = routes.coordinates.map(
           (coord: { lat: number; lng: number }) => [coord.lat, coord.lng],
